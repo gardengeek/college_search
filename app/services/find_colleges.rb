@@ -12,6 +12,8 @@ class FindColleges
   def perform
     api_response = RestClient.get(college_search_url, headers)
     api_response.body
+  rescue => exception
+    { error: exception.message }
   end
 
   private
