@@ -1,0 +1,7 @@
+<%= image_tag "https://maps.googleapis.com/maps/api/staticmap?#{@markers.join('&')}&size=500x400&key=AIzaSyDH7kEjjtFHXjg_7oijq5kZVP4cvfkowvc" %>
+
+<ul>
+  <% @legend.each do |l| %>
+    <li><%= "#{l[:letter]}: #{l[:name]}" %></li>
+  <% end %>
+</ul>
