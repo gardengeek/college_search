@@ -8,10 +8,10 @@ describe FindColleges do
 
     it "calls the College Scorecard API and returns the schools" do
       stub_request(:get, url).
-        to_return(status: 200, headers: [], body: "bar")
+        to_return(status: 200, headers: [], body: { result: { foo: "bar" }}.to_json)
 
       result = described_class.new(search_term: "foo").perform
-      expect(result).to eq("bar")
+      expect(result).to eq({ "result" => { "foo" => "bar" }})
     end
 
     describe "College Scorecard returns an error" do
