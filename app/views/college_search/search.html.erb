@@ -1,7 +1,15 @@
-<%= image_tag "https://maps.googleapis.com/maps/api/staticmap?#{@markers.join('&')}&size=500x400&key=AIzaSyDH7kEjjtFHXjg_7oijq5kZVP4cvfkowvc" %>
+<% if @error.blank? %>
+  <% if @decorator.legend.present? %>
+    <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?#{@decorator.markers.join('&')}&size=500x400&key=AIzaSyDH7kEjjtFHXjg_7oijq5kZVP4cvfkowvc" %>
 
-<ul>
-  <% @legend.each do |l| %>
-    <li><%= "#{l[:letter]}: #{l[:name]}" %></li>
+    <ul>
+      <% @decorator.legend.each do |l| %>
+        <li><%= "#{l[:letter]}: #{l[:name]}" %></li>
+      <% end %>
+    </ul>
+  <% else %>
+      No schools were found from the search.
   <% end %>
-</ul>
+<% else %>
+  <%= "The following error was returned: #{@error}" %>
+<% end %>
