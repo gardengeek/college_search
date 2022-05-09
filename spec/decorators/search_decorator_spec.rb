@@ -10,16 +10,19 @@ describe SearchDecorator do
     ]
   end
 
-  describe "#markers" do
-    it "returns the google markers for the schools" do
+  describe "#google_map_image" do
+    it "returns the google map image for the schools" do
       markers = [
         "markers=label:A|41.100847,-80.644393",
         "markers=label:B|41.102919,-81.245302",
         "markers=label:C|39.84549,-84.14076",
         "markers=label:D|40.069314,-82.447441"
       ]
-      expect(described_class.new(college_search_results: college_search_results).markers)
-        .to match_array(markers) 
+      image_map = "https://maps.googleapis.com/maps/api/staticmap?#{markers.join('&')}&size=500x400&key=#{ ENV["GOOGLE_MAPS_API_KEY"] }"
+
+
+      expect(described_class.new(college_search_results: college_search_results).google_map_image)
+        .to eq(image_map)
     end
   end
 
