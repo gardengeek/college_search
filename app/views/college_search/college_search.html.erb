@@ -1,9 +1,27 @@
 <h1>College Search</h1>
-Enter the college name you are searching for in the input field and press 'Search'.
-</b>
-The first 20 colleges will be displayed on a google map.
-<%= form_with url: :search, method: :get do |form| %>
+<p>Enter the college name you are searching for in the input field and press 'Search'.</p>
+<p>The first 20 colleges found will be displayed on a google map.</p>
+<%= form_with url: :college_search, method: :get do |form| %>
   <%= form.label :query, "Search for:" %>
   <%= form.text_field :query %>
   <%= form.submit "Search" %>
+<% end %>
+</br>
+
+<% if @error.present? || @decorator.present? %>
+  <% if @error.blank? %>
+    <% if @decorator.legend.present? %>
+      <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?#{@decorator.markers.join('&')}&size=500x400&key=AIzaSyDH7kEjjtFHXjg_7oijq5kZVP4cvfkowvc" %>
+
+      <ul>
+        <% @decorator.legend.each do |l| %>
+          <li><%= "#{l[:letter]}: #{l[:name]}" %></li>
+        <% end %>
+      </ul>
+    <% else %>
+        No schools were found from the search.
+    <% end %>
+  <% else %>
+    <%= "The following error was returned: #{@error}" %>
+  <% end %>
 <% end %>
